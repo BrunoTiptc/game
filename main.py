@@ -2,6 +2,8 @@ import pgzrun
 import random
 import math
 from pygame import Rect
+import pygame
+import os
 
 # Game constants
 WIDTH = 1000
@@ -397,25 +399,64 @@ def init_game():
     score = 0
     level = 1
 
+# Inicializar pygame.mixer para sons
+pygame.mixer.init()
+
+# Carregar sons
+sound_folder = os.path.join(os.getcwd(), 'sounds')
+
+jump_path = os.path.join(sound_folder, 'jump.wav')
+coin_path = os.path.join(sound_folder, 'coin.wav')
+hit_path = os.path.join(sound_folder, 'hit.wav')
+victory_path = os.path.join(sound_folder, 'victory.wav')
+background_music_path = os.path.join(sound_folder, 'background.wav')
+
+print(f"[DEBUG] Caminho jump.wav: {jump_path}")
+print(f"[DEBUG] Caminho coin.wav: {coin_path}")
+print(f"[DEBUG] Caminho hit.wav: {hit_path}")
+print(f"[DEBUG] Caminho victory.wav: {victory_path}")
+print(f"[DEBUG] Caminho background.wav: {background_music_path}")
+
+jump_sound = pygame.mixer.Sound(jump_path)
+coin_sound = pygame.mixer.Sound(coin_path)
+hit_sound = pygame.mixer.Sound(hit_path)
+victory_sound = pygame.mixer.Sound(victory_path)
+
 def play_jump_sound():
     """Play jump sound effect"""
-    pass
+    try:
+        jump_sound.play()
+    except Exception as e:
+        print(f"Erro ao tocar jump.wav: {e}")
 
 def play_coin_sound():
     """Play coin collection sound"""
-    pass
+    try:
+        coin_sound.play()
+    except Exception as e:
+        print(f"Erro ao tocar coin.wav: {e}")
 
 def play_hit_sound():
     """Play hit sound"""
-    pass
+    try:
+        hit_sound.play()
+    except Exception as e:
+        print(f"Erro ao tocar hit.wav: {e}")
 
 def play_background_music():
     """Play background music"""
-    pass
+    try:
+        pygame.mixer.music.load(background_music_path)
+        pygame.mixer.music.play(-1)  # Loop infinito
+    except Exception as e:
+        print(f"Erro ao tocar background.wav: {e}")
 
 def stop_background_music():
     """Stop background music"""
-    pass
+    try:
+        pygame.mixer.music.stop()
+    except Exception as e:
+        print(f"Erro ao parar música: {e}")
 
 def draw_menu():
     screen.fill((50, 50, 100))
